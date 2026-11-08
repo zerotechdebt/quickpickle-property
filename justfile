@@ -82,6 +82,17 @@ specdrive:
 check-all: format lint typecheck specdrive
     @echo "All checks passed"
 
+# Cut a release from a clean main: needs a CHANGELOG entry; checks, bumps, commits, tags, pushes
+release version:
+    @test -z "$(git status --porcelain)" || (echo "Working tree not clean; commit the CHANGELOG entry first" && exit 1)
+    @test "$(git branch --show-current)" = main || (echo "Releases are cut from main" && exit 1)
+    @scripts/changelog-section.sh {{version}} > /dev/null
+    just check-all
+    npm version {{version}} --no-git-tag-version
+    git commit -am "chore: release {{version}}"
+    git tag -a v{{version}} -m "v{{version}}"
+    git push origin main v{{version}}
+
 # Remove generated files and artifacts
 clean:
     rm -rf node_modules dist coverage .vitest test-results.xml
