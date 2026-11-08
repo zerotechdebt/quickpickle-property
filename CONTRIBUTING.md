@@ -5,7 +5,7 @@ Thank you for your interest in contributing. This guide covers the development w
 ## Dev Setup
 
 ```bash
-git clone https://github.com/bryonjacob/quickpickle-property.git
+git clone https://github.com/zerotechdebt/quickpickle-property.git
 cd quickpickle-property
 pnpm install
 pnpm build
