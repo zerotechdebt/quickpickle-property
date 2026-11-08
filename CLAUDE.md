@@ -64,6 +64,8 @@ npx vitest run --config vitest.all.config.ts  # All tests including plugin + con
 
 Note: `specdrive verify` requires RID→JUnit bridging. Run `specdrive init` in the project to set that up.
 
+Releases: add a CHANGELOG entry, then `just release X.Y.Z`; GitHub Actions publishes to npm. Never `npm publish` by hand.
+
 ## Public API
 
 ```typescript
