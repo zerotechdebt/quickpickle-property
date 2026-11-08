@@ -1,6 +1,6 @@
 {
   "name": "quickpickle-property",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "description": "Property-based testing plugin for QuickPickle — express universal invariants in standard Gherkin",
   "main": "./dist/index.js",
