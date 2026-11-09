@@ -64,7 +64,14 @@ npx vitest run --config vitest.all.config.ts  # All tests including plugin + con
 
 Note: `specdrive verify` requires RID→JUnit bridging. Run `specdrive init` in the project to set that up.
 
-Releases: add a CHANGELOG entry, then `just release X.Y.Z`; GitHub Actions publishes to npm. Never `npm publish` by hand.
+## CI and Releases
+
+CI (`.github/workflows/ci.yml`) runs all checks, including the bdd-pbt-spec conformance suite (`specdrive install`, then `specdrive audit` and `verify`), on Node 22 and 24 for every push to `main` and every PR. Releases are published by `.github/workflows/release.yml` when a `vX.Y.Z` tag is pushed: it checks the tag matches `package.json`, runs all checks, publishes to npm via trusted publishing (no token, with provenance), and creates a GitHub release from the CHANGELOG section.
+
+1. On a clean `main`, commit a `## [X.Y.Z] - YYYY-MM-DD` entry in `CHANGELOG.md`.
+2. Run `just release X.Y.Z` (checks, bumps `package.json`, commits, tags, pushes).
+
+Never `npm publish` by hand. If the Release run fails before publishing, fix the cause and `gh run rerun <id> --failed`. If the fix changes repo files, delete the tag, push the fix, and tag again. A 403 "OIDC permission denied" means the npm trusted-publisher entry needs "npm publish" ticked under Allowed actions.
 
 ## Public API
 
